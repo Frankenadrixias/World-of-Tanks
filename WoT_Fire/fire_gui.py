@@ -25,6 +25,7 @@ matplotlib.rc('font', **font)
 
 # 配件属性，每个配件都会对以下属性中的某一个或某几个产生影响：
 # 瞄准时间 aim_time，基础精度 dispersion，三扩系数 factors，转向速度 traverse_speed
+# 每行数字分别代表白装/1级橙、加成槽/2级橙、红装/3级橙、紫装对以上四种属性的作用数值
 item_level = [[[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]],  # 无配件
               [[1, 1, 0.8, 1], [1, 1, 0.77, 1], [1, 1, 0.75, 1], [1, 1, 0.725, 1]],  # 垂稳
               [[1.1, 1, 1, 1], [1.115, 1, 1, 1], [1.125, 1, 1, 1], [1.135, 1, 1, 1]],  # 炮控
@@ -38,7 +39,7 @@ item_level = [[[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]],  # 无�
 
 # 创建一个matplotlib图形绘制类
 class MyFigure(FigureCanvasQTAgg):
-    def __init__(self, width=4, height=3, dpi=150):
+    def __init__(self, width=4, height=3, dpi=120):
 
         # 创建一个 Figure
         self.fig = Figure(figsize=(width, height), dpi=dpi)
@@ -52,18 +53,18 @@ class MyFigure(FigureCanvasQTAgg):
         # Matplotlib根据输入参数画图
 
     def plot_figure(self, f_move, f_hull, f_gun, f_fire, t0, d0, d_obj,
-                    v0, w_hull, w_gun, t_r, check, i1, i2, i3, l1, l2, l3):
+                    v0, w_hull, w_gun, t_r, check, i1, i2, i3, l1, l2, l3, i4, i5, i6, l4, l5, l6,):
 
         # 重置和调整画布
         self.fig.clf()
-        self.fig.subplots_adjust(left=0.06, bottom=0.08, right=0.96, top=0.95,
-                                 hspace=0.3, wspace=0.2)
+        self.fig.subplots_adjust(left=0.06, bottom=0.08, right=0.98, top=0.95,
+                                 hspace=0.3, wspace=0.16)
 
         # 计算配件影响的参数数值
-        t_item = item_level[i1][l1][0] * item_level[i2][l2][0] * item_level[i3][l3][0]
-        d_item = item_level[i1][l1][1] * item_level[i2][l2][1] * item_level[i3][l3][1]
-        f_item = item_level[i1][l1][2] * item_level[i2][l2][2] * item_level[i3][l3][2]
-        w_item = item_level[i1][l1][3] * item_level[i2][l2][3] * item_level[i3][l3][3]
+        t_item_1 = item_level[i1][l1][0] * item_level[i2][l2][0] * item_level[i3][l3][0]
+        d_item_1 = item_level[i1][l1][1] * item_level[i2][l2][1] * item_level[i3][l3][1]
+        f_item_1 = item_level[i1][l1][2] * item_level[i2][l2][2] * item_level[i3][l3][2]
+        w_item_1 = item_level[i1][l1][3] * item_level[i2][l2][3] * item_level[i3][l3][3]
 
         # 图1：坦克直线前进时火炮缩圈到指定精度所需时间与当前速度的关系图
         self.axes1 = self.fig.add_subplot(221)
@@ -74,13 +75,13 @@ class MyFigure(FigureCanvasQTAgg):
             y1.append(t1 if t1 >= 0 else 0)
             t2 = t0 * log(d0 * (sqrt(1 + (x[i] * f_move) ** 2)) / d_obj)
             y2.append(t2 if t2 >= 0 else 0)
-            t3 = (t0 / t_item) * log(sqrt(1 + (x[i] * f_move * f_item) ** 2))
+            t3 = (t0 / t_item_1) * log(sqrt(1 + (x[i] * f_move * f_item_1) ** 2))
             y3.append(t3 if t3 >= 0 else 0)
-            t4 = (t0 / t_item) * log((d0 * d_item) * (sqrt(1 + (x[i] * f_move * f_item) ** 2)) / d_obj)
+            t4 = (t0 / t_item_1) * log((d0 * d_item_1) * (sqrt(1 + (x[i] * f_move * f_item_1) ** 2)) / d_obj)
             y4.append(t4 if t4 >= 0 else 0)
 
-        self.axes1.plot(x, y1, linestyle=':', label='缩圈到基础精度（无配件）')
-        self.axes1.plot(x, y2, linestyle=':', label='缩圈到目标精度（无配件）')
+        self.axes1.plot(x, y1, linestyle=':', label='缩圈到基础精度（配件组1）')
+        self.axes1.plot(x, y2, linestyle=':', label='缩圈到目标精度（配件组1）')
         self.axes1.plot(x, y3, label='缩圈到基础精度（当前配件）\n最大所需时间: ' +
                                      str('{:.3f}'.format(y3[-1])) + 's')
         self.axes1.plot(x, y4, label='缩圈到目标精度（当前配件）\n最大所需时间: ' +
@@ -100,10 +101,10 @@ class MyFigure(FigureCanvasQTAgg):
             x.append(i / 100.0)
             t1 = d0 * (sqrt(1 + (x[i] * f_move) ** 2))
             y1.append(t1 if t1 >= d0 else d0)
-            t2 = d0 * d_item * (sqrt(1 + (x[i] * f_move * f_item) ** 2))
-            y2.append(t2 if t2 >= d0 * d_item else d0 * d_item)
+            t2 = d0 * d_item_1 * (sqrt(1 + (x[i] * f_move * f_item_1) ** 2))
+            y2.append(t2 if t2 >= d0 * d_item_1 else d0 * d_item_1)
             y3.append(d_obj)
-            y4.append(d0 * d_item)
+            y4.append(d0 * d_item_1)
 
         self.axes2.plot(x, y1, linestyle=':', label='实时精度（无配件）')
         self.axes2.plot(x, y2, label='实时精度（当前配件）\n最大精度: ' +
@@ -130,25 +131,25 @@ class MyFigure(FigureCanvasQTAgg):
             if check is True:
                 t1 = t0 * log(sqrt(1 + (w_gun * f_gun) ** 2 + (w_hull * f_hull) ** 2))
                 t2 = t0 * log(d0 * (sqrt(1 + (w_gun * f_gun) ** 2 + (w_hull * f_hull) ** 2)) / d_obj)
-                t3 = (t0 / t_item) * log(sqrt(1 + ((w_gun * w_item * f_gun) ** 2 +
-                                                   (w_hull * w_item * f_hull) ** 2) * f_item ** 2))
-                t4 = (t0 / t_item) * log((d0 * d_item) *
-                                         (sqrt(1 + ((w_gun * w_item * f_gun) ** 2 +
-                                                    (w_hull * w_item * f_hull) ** 2) * f_item ** 2)) / d_obj)
+                t3 = (t0 / t_item_1) * log(sqrt(1 + ((w_gun * w_item_1 * f_gun) ** 2 +
+                                                     (w_hull * w_item_1 * f_hull) ** 2) * f_item_1 ** 2))
+                t4 = (t0 / t_item_1) * log((d0 * d_item_1) *
+                                           (sqrt(1 + ((w_gun * w_item_1 * f_gun) ** 2 +
+                                                      (w_hull * w_item_1 * f_hull) ** 2) * f_item_1 ** 2)) / d_obj)
                 y1.append(i / (w_gun + w_hull) + t1)
                 y2.append(i / (w_gun + w_hull) + t2)
-                y3.append(i / ((w_gun + w_hull) * w_item) + t3)
-                y4.append(i / ((w_gun + w_hull) * w_item) + t4)
+                y3.append(i / ((w_gun + w_hull) * w_item_1) + t3)
+                y4.append(i / ((w_gun + w_hull) * w_item_1) + t4)
             else:
                 t1 = t0 * log(sqrt(1 + (w_gun * f_gun) ** 2))
                 t2 = t0 * log(d0 * (sqrt(1 + (w_gun * f_gun) ** 2)) / d_obj)
-                t3 = (t0 / t_item) * log(sqrt(1 + (w_gun * w_item * f_gun * f_item) ** 2))
-                t4 = (t0 / t_item) * log((d0 * d_item) *
-                                         (sqrt(1 + (w_gun * w_item * f_gun * f_item) ** 2)) / d_obj)
+                t3 = (t0 / t_item_1) * log(sqrt(1 + (w_gun * w_item_1 * f_gun * f_item_1) ** 2))
+                t4 = (t0 / t_item_1) * log((d0 * d_item_1) *
+                                           (sqrt(1 + (w_gun * w_item_1 * f_gun * f_item_1) ** 2)) / d_obj)
                 y1.append(i / w_gun + t1)
                 y2.append(i / w_gun + t2)
-                y3.append(i / (w_gun * w_item) + t3)
-                y4.append(i / (w_gun * w_item) + t4)
+                y3.append(i / (w_gun * w_item_1) + t3)
+                y4.append(i / (w_gun * w_item_1) + t4)
 
         self.axes3.plot(x, y1, linestyle=':', label='缩圈到基础精度（无配件）')
         self.axes3.plot(x, y2, linestyle=':', label='缩圈到目标精度（无配件）')
@@ -171,17 +172,17 @@ class MyFigure(FigureCanvasQTAgg):
             x.append(i / 100.0)
             if x[i] == 0:
                 t1 = d0
-                t2 = d0 * d_item
+                t2 = d0 * d_item_1
             else:
                 t1 = d0 * (sqrt(1 + f_fire ** 2)) / np.e ** (x[i] / t0)
-                t2 = d0 * d_item * (sqrt(1 + (f_fire * f_item) ** 2)) / np.e ** (x[i] * t_item / t0)
+                t2 = d0 * d_item_1 * (sqrt(1 + (f_fire * f_item_1) ** 2)) / np.e ** (x[i] * t_item_1 / t0)
             y1.append(t1 if t1 >= d0 else d0)
-            y2.append(t2 if t2 >= d0 * d_item else d0 * d_item)
+            y2.append(t2 if t2 >= d0 * d_item_1 else d0 * d_item_1)
             y3.append(d_obj)
-            y4.append(d0 * d_item)
+            y4.append(d0 * d_item_1)
 
-        t2 = (t0 / t_item) * log((d0 * d_item) * (sqrt(1 + (f_fire * f_item) ** 2)) / d_obj)
-        t3 = (t0 / t_item) * log(sqrt(1 + (f_fire * f_item) ** 2))
+        t2 = (t0 / t_item_1) * log((d0 * d_item_1) * (sqrt(1 + (f_fire * f_item_1) ** 2)) / d_obj)
+        t3 = (t0 / t_item_1) * log(sqrt(1 + (f_fire * f_item_1) ** 2))
 
         self.axes4.plot(x, y1, linestyle=':', label='实时精度（无配件）')
         self.axes4.plot(x, y2, label='实时精度（当前配件）')
@@ -239,12 +240,21 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         check = self.radioButton.isChecked()
 
         # 配件选择下拉菜单
+        # 第一套配件的选择结果
         item_1 = self.comboBox_item_1.currentIndex()
         item_2 = self.comboBox_item_2.currentIndex()
         item_3 = self.comboBox_item_3.currentIndex()
         level_1 = self.comboBox_level_1.currentIndex()
         level_2 = self.comboBox_level_2.currentIndex()
         level_3 = self.comboBox_level_3.currentIndex()
+
+        # 第二套配件的选择结果
+        item_4 = self.comboBox_item_4.currentIndex()
+        item_5 = self.comboBox_item_5.currentIndex()
+        item_6 = self.comboBox_item_6.currentIndex()
+        level_4 = self.comboBox_level_4.currentIndex()
+        level_5 = self.comboBox_level_5.currentIndex()
+        level_6 = self.comboBox_level_6.currentIndex()
 
         # 配件装备信息文本
         txt_1 = self.comboBox_item_1.currentText() + '(' + self.comboBox_level_1.currentText() + ')'
@@ -349,6 +359,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         check = self.radioButton.isChecked()
 
         # 配件选择下拉菜单
+        # 第一套配件的选择结果
         item_1 = self.comboBox_item_1.currentIndex()
         item_2 = self.comboBox_item_2.currentIndex()
         item_3 = self.comboBox_item_3.currentIndex()
@@ -356,10 +367,19 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         level_2 = self.comboBox_level_2.currentIndex()
         level_3 = self.comboBox_level_3.currentIndex()
 
+        # 第二套配件的选择结果
+        item_4 = self.comboBox_item_4.currentIndex()
+        item_5 = self.comboBox_item_5.currentIndex()
+        item_6 = self.comboBox_item_6.currentIndex()
+        level_4 = self.comboBox_level_4.currentIndex()
+        level_5 = self.comboBox_level_5.currentIndex()
+        level_6 = self.comboBox_level_6.currentIndex()
+
         # 传参给 Matplotlib 画图
         self.canvas.plot_figure(move_f, rotate_f, gun_f, fire_f, aim_time, dispersion, dispersion_obj,
                                 top_speed, hull_speed, turret_speed, t_reload, check,
-                                item_1, item_2, item_3, level_1, level_2, level_3)
+                                item_1, item_2, item_3, level_1, level_2, level_3,
+                                item_4, item_5, item_6, level_4, level_5, level_6)
         return
 
 

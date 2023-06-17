@@ -187,7 +187,7 @@ p, li { white-space: pre-wrap; }
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,10,0,5,1,1">
+     <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,10,0,0,0,1,1">
       <property name="spacing">
        <number>15</number>
       </property>
@@ -779,7 +779,7 @@ p, li { white-space: pre-wrap; }
          <number>5</number>
         </property>
         <property name="bottomMargin">
-         <number>5</number>
+         <number>0</number>
         </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -876,370 +876,783 @@ p, li { white-space: pre-wrap; }
           </item>
          </layout>
         </item>
-        <item>
-         <widget class="QLabel" name="label_11">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>1号位配件及等级选择</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_10">
-          <property name="spacing">
-           <number>10</number>
-          </property>
-          <item>
-           <widget class="QComboBox" name="comboBox_item_1">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="contextMenuPolicy">
-             <enum>Qt::DefaultContextMenu</enum>
-            </property>
-            <property name="sizeAdjustPolicy">
-             <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
-            </property>
-            <item>
-             <property name="text">
-              <string>无配件</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>火炮垂直稳定器</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>改进型炮控系统</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>改进型旋转装置</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>改进型瞄具</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>改进型通风系统</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>火控系统(试验型)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>机动强化系统(试验型)</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="comboBox_level_1">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <item>
-             <property name="text">
-              <string>普通/1级</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>加成/2级</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>红装/3级</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>紫装</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_12">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>2号位配件及等级选择</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_11">
-          <property name="spacing">
-           <number>10</number>
-          </property>
-          <item>
-           <widget class="QComboBox" name="comboBox_item_2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="contextMenuPolicy">
-             <enum>Qt::DefaultContextMenu</enum>
-            </property>
-            <property name="sizeAdjustPolicy">
-             <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
-            </property>
-            <item>
-             <property name="text">
-              <string>无配件</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>火炮垂直稳定器</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>改进型炮控系统</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>改进型旋转装置</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>改进型瞄具</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>改进型通风系统</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>火控系统(试验型)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>机动强化系统(试验型)</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="comboBox_level_2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <item>
-             <property name="text">
-              <string>普通/1级</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>加成/2级</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>红装/3级</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>紫装</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_13">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>3号位配件及等级选择</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_12">
-          <property name="spacing">
-           <number>10</number>
-          </property>
-          <item>
-           <widget class="QComboBox" name="comboBox_item_3">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="contextMenuPolicy">
-             <enum>Qt::DefaultContextMenu</enum>
-            </property>
-            <property name="sizeAdjustPolicy">
-             <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
-            </property>
-            <item>
-             <property name="text">
-              <string>无配件</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>火炮垂直稳定器</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>改进型炮控系统</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>改进型旋转装置</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>改进型瞄具</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>改进型通风系统</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>火控系统(试验型)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>机动强化系统(试验型)</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="comboBox_level_3">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <item>
-             <property name="text">
-              <string>普通/1级</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>加成/2级</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>红装/3级</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>紫装</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </item>
        </layout>
+      </item>
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="font">
+         <font>
+          <family>微软雅黑</family>
+         </font>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QTabWidget:pane{border-top:0px solid #ffffff; background:transparent;}</string>
+        </property>
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="tab">
+         <attribute name="title">
+          <string>第一组配件</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <property name="spacing">
+           <number>5</number>
+          </property>
+          <property name="topMargin">
+           <number>5</number>
+          </property>
+          <property name="bottomMargin">
+           <number>5</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_11">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>配件组1：1号位配件及等级选择</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QComboBox" name="comboBox_item_1">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="contextMenuPolicy">
+               <enum>Qt::DefaultContextMenu</enum>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+              </property>
+              <item>
+               <property name="text">
+                <string>无配件</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>火炮垂直稳定器</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型炮控系统</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型旋转装置</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型瞄具</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型通风系统</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>火控系统(试验型)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>机动强化系统(试验型)</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_level_1">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>普通/1级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>加成/2级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>红装/3级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>紫装</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_12">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>配件组1：2号位配件及等级选择</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_11">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QComboBox" name="comboBox_item_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="contextMenuPolicy">
+               <enum>Qt::DefaultContextMenu</enum>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+              </property>
+              <item>
+               <property name="text">
+                <string>无配件</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>火炮垂直稳定器</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型炮控系统</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型旋转装置</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型瞄具</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型通风系统</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>火控系统(试验型)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>机动强化系统(试验型)</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_level_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>普通/1级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>加成/2级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>红装/3级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>紫装</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_13">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>配件组1：3号位配件及等级选择</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QComboBox" name="comboBox_item_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="contextMenuPolicy">
+               <enum>Qt::DefaultContextMenu</enum>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+              </property>
+              <item>
+               <property name="text">
+                <string>无配件</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>火炮垂直稳定器</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型炮控系统</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型旋转装置</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型瞄具</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型通风系统</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>火控系统(试验型)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>机动强化系统(试验型)</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_level_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>普通/1级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>加成/2级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>红装/3级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>紫装</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_2">
+         <attribute name="title">
+          <string>第二组配件</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <property name="spacing">
+           <number>5</number>
+          </property>
+          <property name="topMargin">
+           <number>5</number>
+          </property>
+          <property name="bottomMargin">
+           <number>5</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_17">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>配件组2：1号位配件及等级选择</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_14">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QComboBox" name="comboBox_item_4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="contextMenuPolicy">
+               <enum>Qt::DefaultContextMenu</enum>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+              </property>
+              <item>
+               <property name="text">
+                <string>无配件</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>火炮垂直稳定器</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型炮控系统</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型旋转装置</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型瞄具</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型通风系统</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>火控系统(试验型)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>机动强化系统(试验型)</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_level_4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>普通/1级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>加成/2级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>红装/3级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>紫装</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_16">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>配件组2：2号位配件及等级选择</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_15">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QComboBox" name="comboBox_item_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="contextMenuPolicy">
+               <enum>Qt::DefaultContextMenu</enum>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+              </property>
+              <item>
+               <property name="text">
+                <string>无配件</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>火炮垂直稳定器</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型炮控系统</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型旋转装置</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型瞄具</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型通风系统</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>火控系统(试验型)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>机动强化系统(试验型)</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_level_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>普通/1级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>加成/2级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>红装/3级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>紫装</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_18">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>配件组2：3号位配件及等级选择</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_16">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QComboBox" name="comboBox_item_6">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="contextMenuPolicy">
+               <enum>Qt::DefaultContextMenu</enum>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+              </property>
+              <item>
+               <property name="text">
+                <string>无配件</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>火炮垂直稳定器</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型炮控系统</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型旋转装置</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型瞄具</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>改进型通风系统</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>火控系统(试验型)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>机动强化系统(试验型)</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_level_6">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>普通/1级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>加成/2级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>红装/3级</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>紫装</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_calculate">

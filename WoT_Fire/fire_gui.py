@@ -9,6 +9,7 @@
 
 from PyQt5.QtWidgets import *
 import sys
+import csv
 from fire_ui import Ui_MainWindow
 import numpy as np
 import matplotlib
@@ -76,11 +77,11 @@ class MyFigure(FigureCanvasQTAgg):
         x, y1, y2, y3, y4 = [], [], [], [], []
         for i in range(0, int(v0) * 100):
             x.append(i / 100.0)
-            t1 = (t0 / t_item_1) * log(sqrt(1 + (x[i] * f_move * f_item_1) ** 2))
+            t1 = (t0 / t_item_1) * log(d_item_1 * sqrt(1 + (x[i] * f_move * f_item_1) ** 2))
             y1.append(t1 if t1 >= 0 else 0)
             t2 = (t0 / t_item_1) * log((d0 * d_item_1) * (sqrt(1 + (x[i] * f_move * f_item_1) ** 2)) / d_obj)
             y2.append(t2 if t2 >= 0 else 0)
-            t3 = (t0 / t_item_2) * log(sqrt(1 + (x[i] * f_move * f_item_2) ** 2))
+            t3 = (t0 / t_item_2) * log(d_item_2 * sqrt(1 + (x[i] * f_move * f_item_2) ** 2))
             y3.append(t3 if t3 >= 0 else 0)
             t4 = (t0 / t_item_2) * log((d0 * d_item_2) * (sqrt(1 + (x[i] * f_move * f_item_2) ** 2)) / d_obj)
             y4.append(t4 if t4 >= 0 else 0)
@@ -126,18 +127,18 @@ class MyFigure(FigureCanvasQTAgg):
         # 图3：坦克旋转时火炮缩圈到指定精度所需时间与旋转角度的关系图
         self.axes3 = self.fig.add_subplot(223)
         x, y1, y2, y3, y4 = [], [], [], [], []
-        for i in range(0, angle):
+        for i in range(0, angle + 1):
             x.append(i)
 
-            # 如果勾选 “同时旋转车体” 选项：
+            # 如果勾选 “旋转车体” 选项：
             if check is True:
-                t1 = (t0 / t_item_1) * log(sqrt(1 + ((w_gun * w_item_1 * f_gun) ** 2 +
-                                                     (w_hull * w_item_1 * f_hull) ** 2) * f_item_1 ** 2))
+                t1 = (t0 / t_item_1) * log(d_item_1 * sqrt(1 + ((w_gun * w_item_1 * f_gun) ** 2 +
+                                                                (w_hull * w_item_1 * f_hull) ** 2) * f_item_1 ** 2))
                 t2 = (t0 / t_item_1) * log((d0 * d_item_1) *
                                            (sqrt(1 + ((w_gun * w_item_1 * f_gun) ** 2 +
                                                       (w_hull * w_item_1 * f_hull) ** 2) * f_item_1 ** 2)) / d_obj)
-                t3 = (t0 / t_item_2) * log(sqrt(1 + ((w_gun * w_item_2 * f_gun) ** 2 +
-                                                     (w_hull * w_item_2 * f_hull) ** 2) * f_item_2 ** 2))
+                t3 = (t0 / t_item_2) * log(d_item_2 * sqrt(1 + ((w_gun * w_item_2 * f_gun) ** 2 +
+                                                                (w_hull * w_item_2 * f_hull) ** 2) * f_item_2 ** 2))
                 t4 = (t0 / t_item_2) * log((d0 * d_item_2) *
                                            (sqrt(1 + ((w_gun * w_item_2 * f_gun) ** 2 +
                                                       (w_hull * w_item_2 * f_hull) ** 2) * f_item_2 ** 2)) / d_obj)
@@ -145,11 +146,13 @@ class MyFigure(FigureCanvasQTAgg):
                 y2.append(i / ((w_gun + w_hull) * w_item_1) + t2)
                 y3.append(i / ((w_gun + w_hull) * w_item_2) + t3)
                 y4.append(i / ((w_gun + w_hull) * w_item_2) + t4)
+
+            # 不勾选 “旋转车体” 选项：
             else:
-                t1 = (t0 / t_item_1) * log(sqrt(1 + (w_gun * w_item_1 * f_gun * f_item_1) ** 2))
+                t1 = (t0 / t_item_1) * log(d_item_1 * sqrt(1 + (w_gun * w_item_1 * f_gun * f_item_1) ** 2))
                 t2 = (t0 / t_item_1) * log((d0 * d_item_1) *
                                            (sqrt(1 + (w_gun * w_item_1 * f_gun * f_item_1) ** 2)) / d_obj)
-                t3 = (t0 / t_item_2) * log(sqrt(1 + (w_gun * w_item_2 * f_gun * f_item_2) ** 2))
+                t3 = (t0 / t_item_2) * log(d_item_2 * sqrt(1 + (w_gun * w_item_2 * f_gun * f_item_2) ** 2))
                 t4 = (t0 / t_item_2) * log((d0 * d_item_2) *
                                            (sqrt(1 + (w_gun * w_item_2 * f_gun * f_item_2) ** 2)) / d_obj)
                 y1.append(i / (w_gun * w_item_1) + t1)
@@ -275,20 +278,14 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         f_item_2 = item_level[item_4][level_4][2] * item_level[item_5][level_5][2] * item_level[item_6][level_6][2]
         w_item_2 = item_level[item_4][level_4][3] * item_level[item_5][level_5][3] * item_level[item_6][level_6][3]
 
-        move_f_str = str('{:.3f}'.format(move_f * f_item_1))
-        rotate_f_str = str('{:.3f}'.format(rotate_f * f_item_1))
-        gun_f_str = str('{:.3f}'.format(gun_f * f_item_1))
-        aim_time_str = str('{:.3f}'.format(aim_time / t_item_1))
-        dispersion_str = str('{:.3f}'.format(dispersion * d_item_1))
-
         # 计算各个状态下的数值
         # 坦克直线前进时火炮缩圈到指定精度所需时间与最大精度
-        t1 = (aim_time / t_item_1) * log(sqrt(1 + (top_speed * move_f * f_item_1) ** 2))
+        t1 = (aim_time / t_item_1) * log(d_item_1 * sqrt(1 + (top_speed * move_f * f_item_1) ** 2))
         t2 = (aim_time / t_item_1) * log((dispersion * d_item_1) *
                                          (sqrt(1 + (top_speed * move_f * f_item_1) ** 2)) / dispersion_obj)
         t3 = (dispersion * d_item_1) * (sqrt(1 + (top_speed * move_f * f_item_1) ** 2))
 
-        t4 = (aim_time / t_item_2) * log(sqrt(1 + (top_speed * move_f * f_item_2) ** 2))
+        t4 = (aim_time / t_item_2) * log(d_item_2 * sqrt(1 + (top_speed * move_f * f_item_2) ** 2))
         t5 = (aim_time / t_item_2) * log((dispersion * d_item_2) *
                                          (sqrt(1 + (top_speed * move_f * f_item_2) ** 2)) / dispersion_obj)
         t6 = (dispersion * d_item_2) * (sqrt(1 + (top_speed * move_f * f_item_2) ** 2))
@@ -296,29 +293,29 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         # 坦克旋转时火炮缩圈到指定精度所需时间与旋转角度
         if check is True:
             t7 = angle / ((turret_speed + hull_speed) * w_item_1) + (aim_time / t_item_1) * \
-                 log(sqrt(1 + ((turret_speed * w_item_1 * gun_f) ** 2 +
-                               (hull_speed * w_item_1 * rotate_f) ** 2) * f_item_1 ** 2))
+                 log(d_item_1 * sqrt(1 + ((turret_speed * w_item_1 * gun_f) ** 2 +
+                                          (hull_speed * w_item_1 * rotate_f) ** 2) * f_item_1 ** 2))
             t8 = angle / ((turret_speed + hull_speed) * w_item_1) + (aim_time / t_item_1) * \
                  log((dispersion * d_item_1) *
                      (sqrt(1 + ((turret_speed * w_item_1 * gun_f) ** 2 +
                                 (hull_speed * w_item_1 * rotate_f) ** 2) * f_item_1 ** 2)) / dispersion_obj)
 
             t9 = angle / ((turret_speed + hull_speed) * w_item_2) + (aim_time / t_item_2) * \
-                 log(sqrt(1 + ((turret_speed * w_item_2 * gun_f) ** 2 +
-                               (hull_speed * w_item_2 * rotate_f) ** 2) * f_item_2 ** 2))
+                 log(d_item_1 * sqrt(1 + ((turret_speed * w_item_2 * gun_f) ** 2 +
+                                          (hull_speed * w_item_2 * rotate_f) ** 2) * f_item_2 ** 2))
             t10 = angle / ((turret_speed + hull_speed) * w_item_2) + (aim_time / t_item_2) * \
                   log((dispersion * d_item_2) *
                       (sqrt(1 + ((turret_speed * w_item_2 * gun_f) ** 2 +
                                  (hull_speed * w_item_2 * rotate_f) ** 2) * f_item_2 ** 2)) / dispersion_obj)
         else:
             t7 = angle / (turret_speed * w_item_1) + (aim_time / t_item_1) * \
-                 log(sqrt(1 + (turret_speed * w_item_1 * gun_f * f_item_1) ** 2))
+                 log(d_item_1 * sqrt(1 + (turret_speed * w_item_1 * gun_f * f_item_1) ** 2))
             t8 = angle / (turret_speed * w_item_1) + (aim_time / t_item_1) * \
                  log((dispersion * d_item_1) *
                      (sqrt(1 + (turret_speed * w_item_1 * gun_f * f_item_1) ** 2)) / dispersion_obj)
 
             t9 = angle / (turret_speed * w_item_2) + (aim_time / t_item_2) * \
-                 log(sqrt(1 + (turret_speed * w_item_2 * gun_f * f_item_2) ** 2))
+                 log(d_item_2 * sqrt(1 + (turret_speed * w_item_2 * gun_f * f_item_2) ** 2))
             t10 = angle / (turret_speed * w_item_2) + (aim_time / t_item_2) * \
                   log((dispersion * d_item_2) *
                       (sqrt(1 + (turret_speed * w_item_2 * gun_f * f_item_2) ** 2)) / dispersion_obj)
@@ -359,6 +356,112 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def help(self):
         QMessageBox.about(self, "帮助", "坦克世界缩圈扩圈计算工具 v1.0\nCopyright 黯流雾雨, 2023")
         return
+
+    def read_file(self):
+        try:
+            file_name = QFileDialog.getOpenFileName(self, '选择文件', '', 'Excel 逗号分隔值文件(*.csv)')
+            attr_list = []
+            with open(file_name[0], 'r') as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    attr_list.append(row)
+
+            # 基础扩圈系数
+            self.horizontalSlider_move.setValue(int(attr_list[0][0]))
+            self.horizontalSlider_rotate.setValue(int(attr_list[1][0]))
+            self.horizontalSlider_gun.setValue(int(attr_list[2][0]))
+            self.doubleSpinBox_fire.setValue(round(float(attr_list[3][0]), 2))
+
+            # 瞄准时间和精度
+            self.doubleSpinBox_aimTime.setValue(round(float(attr_list[4][0]), 3))
+            self.doubleSpinBox_dispersion.setValue(round(float(attr_list[5][0]), 3))
+            self.doubleSpinBox_objectDispersion.setValue(round(float(attr_list[6][0]), 3))
+
+            # 极速、旋转速度和装填时间
+            self.doubleSpinBox_topSpeed.setValue(round(float(attr_list[7][0]), 1))
+            self.doubleSpinBox_hullSpeed.setValue(round(float(attr_list[8][0]), 1))
+            self.doubleSpinBox_turretSpeed.setValue(round(float(attr_list[9][0]), 1))
+            self.doubleSpinBox_reloadTime.setValue(round(float(attr_list[10][0]), 2))
+
+            # 是否勾选同时旋转车体和旋转角度
+            self.radioButton.setChecked(True if attr_list[11][0] == 'True' else False)
+            self.spinBox.setValue(int(attr_list[12][0]))
+
+            # 配件选择下拉菜单
+            # 第一套配件的选择结果
+            self.comboBox_item_1.setCurrentIndex(int(attr_list[13][0]))
+            self.comboBox_item_2.setCurrentIndex(int(attr_list[14][0]))
+            self.comboBox_item_3.setCurrentIndex(int(attr_list[15][0]))
+            self.comboBox_level_1.setCurrentIndex(int(attr_list[16][0]))
+            self.comboBox_level_2.setCurrentIndex(int(attr_list[17][0]))
+            self.comboBox_level_3.setCurrentIndex(int(attr_list[18][0]))
+
+            # 第二套配件的选择结果
+            self.comboBox_item_4.setCurrentIndex(int(attr_list[19][0]))
+            self.comboBox_item_5.setCurrentIndex(int(attr_list[20][0]))
+            self.comboBox_item_6.setCurrentIndex(int(attr_list[21][0]))
+            self.comboBox_level_4.setCurrentIndex(int(attr_list[22][0]))
+            self.comboBox_level_5.setCurrentIndex(int(attr_list[23][0]))
+            self.comboBox_level_6.setCurrentIndex(int(attr_list[24][0]))
+
+            QMessageBox.about(self, "打开成功", "打开配置属性文件成功，文件名：" + str(file_name[0]))
+        except FileNotFoundError:
+            QMessageBox.about(self, "打开失败", "打开文件失败，可能是文件不存在或类型错误")
+
+    def save_file(self):
+        try:
+            file_name = QFileDialog.getSaveFileName(self, '选择文件', 'wot.csv', 'Excel 逗号分隔值文件(*.csv)')
+
+            # 基础扩圈系数
+            move_f = self.horizontalSlider_move.value()
+            rotate_f = self.horizontalSlider_rotate.value()
+            gun_f = self.horizontalSlider_gun.value()
+            fire_f = self.doubleSpinBox_fire.value()
+
+            # 瞄准时间和精度
+            aim_time = self.doubleSpinBox_aimTime.value()
+            dispersion = self.doubleSpinBox_dispersion.value()
+            dispersion_obj = self.doubleSpinBox_objectDispersion.value()
+
+            # 极速、旋转速度和装填时间
+            top_speed = self.doubleSpinBox_topSpeed.value()
+            hull_speed = self.doubleSpinBox_hullSpeed.value()
+            turret_speed = self.doubleSpinBox_turretSpeed.value()
+            t_reload = self.doubleSpinBox_reloadTime.value()
+
+            # 是否勾选同时旋转车体和旋转角度
+            check = self.radioButton.isChecked()
+            angle = self.spinBox.value()
+
+            # 配件选择下拉菜单
+            # 第一套配件的选择结果
+            item_1 = self.comboBox_item_1.currentIndex()
+            item_2 = self.comboBox_item_2.currentIndex()
+            item_3 = self.comboBox_item_3.currentIndex()
+            level_1 = self.comboBox_level_1.currentIndex()
+            level_2 = self.comboBox_level_2.currentIndex()
+            level_3 = self.comboBox_level_3.currentIndex()
+
+            # 第二套配件的选择结果
+            item_4 = self.comboBox_item_4.currentIndex()
+            item_5 = self.comboBox_item_5.currentIndex()
+            item_6 = self.comboBox_item_6.currentIndex()
+            level_4 = self.comboBox_level_4.currentIndex()
+            level_5 = self.comboBox_level_5.currentIndex()
+            level_6 = self.comboBox_level_6.currentIndex()
+
+            attr_list = [[move_f], [rotate_f], [gun_f], [fire_f], [aim_time], [dispersion], [dispersion_obj],
+                         [top_speed], [hull_speed], [turret_speed], [t_reload], [check], [angle],
+                         [item_1], [item_2], [item_3], [level_1], [level_2], [level_3],
+                         [item_4], [item_5], [item_6], [level_4], [level_5], [level_6]]
+            with open(file_name[0], 'w', newline="") as f:
+                writer = csv.writer(f)
+                for row in range(len(attr_list)):
+                    writer.writerow(attr_list[row])
+
+            QMessageBox.about(self, "保存成功", "保存配置属性文件成功，文件名：" + str(file_name[0]))
+        except FileExistsError:
+            QMessageBox.about(self, "保存失败", "保存文件失败，文件已存在")
 
     def value_change_move(self):
         move_f = self.horizontalSlider_move.value() / 100.0

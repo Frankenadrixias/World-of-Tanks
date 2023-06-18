@@ -756,12 +756,12 @@ p, li { white-space: pre-wrap; }
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0,1">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
         <property name="spacing">
          <number>5</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>10</number>
         </property>
         <item>
          <widget class="QLabel" name="label_15">
@@ -1813,17 +1813,35 @@ p, li { white-space: pre-wrap; }
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen">
    <property name="text">
-    <string>打开</string>
+    <string>打开csv文件</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionSave">
    <property name="text">
-    <string>保存</string>
+    <string>保存为csv文件</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionClose">
    <property name="text">
     <string>关闭</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionQuit">
@@ -1880,8 +1898,8 @@ p, li { white-space: pre-wrap; }
    <slot>value_change_move()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1259</x>
-     <y>138</y>
+     <x>1599</x>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
      <x>997</x>
@@ -1896,8 +1914,8 @@ p, li { white-space: pre-wrap; }
    <slot>value_change_rotate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1259</x>
-     <y>206</y>
+     <x>1599</x>
+     <y>243</y>
     </hint>
     <hint type="destinationlabel">
      <x>994</x>
@@ -1928,8 +1946,8 @@ p, li { white-space: pre-wrap; }
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1178</x>
-     <y>900</y>
+     <x>1600</x>
+     <y>1038</y>
     </hint>
     <hint type="destinationlabel">
      <x>1145</x>
@@ -1944,12 +1962,44 @@ p, li { white-space: pre-wrap; }
    <slot>click_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1193</x>
-     <y>835</y>
+     <x>1600</x>
+     <y>987</y>
     </hint>
     <hint type="destinationlabel">
      <x>1159</x>
      <y>836</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionOpen</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>read_file()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>809</x>
+     <y>539</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSave</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>save_file()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>809</x>
+     <y>539</y>
     </hint>
    </hints>
   </connection>
@@ -1960,5 +2010,7 @@ p, li { white-space: pre-wrap; }
   <slot>value_change_move()</slot>
   <slot>value_change_rotate()</slot>
   <slot>value_change_gun()</slot>
+  <slot>read_file()</slot>
+  <slot>save_file()</slot>
  </slots>
 </ui>

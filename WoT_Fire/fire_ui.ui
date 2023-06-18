@@ -1813,23 +1813,23 @@ p, li { white-space: pre-wrap; }
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen">
    <property name="text">
-    <string>打开csv文件</string>
+    <string>导入配置数据</string>
    </property>
    <property name="font">
     <font>
      <family>微软雅黑</family>
-     <pointsize>10</pointsize>
+     <pointsize>9</pointsize>
     </font>
    </property>
   </action>
   <action name="actionSave">
    <property name="text">
-    <string>保存为csv文件</string>
+    <string>保存配置数据</string>
    </property>
    <property name="font">
     <font>
      <family>微软雅黑</family>
-     <pointsize>10</pointsize>
+     <pointsize>9</pointsize>
     </font>
    </property>
   </action>
@@ -1840,7 +1840,7 @@ p, li { white-space: pre-wrap; }
    <property name="font">
     <font>
      <family>微软雅黑</family>
-     <pointsize>10</pointsize>
+     <pointsize>9</pointsize>
     </font>
    </property>
   </action>
@@ -1848,10 +1848,20 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>退出程序</string>
    </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+    </font>
+   </property>
   </action>
   <action name="actionHelp">
    <property name="text">
     <string>程序帮助信息</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+    </font>
    </property>
   </action>
  </widget>

@@ -75,7 +75,7 @@ class MyFigure(FigureCanvasQTAgg):
         # 图1：坦克直线前进时火炮缩圈到指定精度所需时间与当前速度的关系图
         self.axes1 = self.fig.add_subplot(221)
         x, y1, y2, y3, y4 = [], [], [], [], []
-        for i in range(0, int(v0) * 100):
+        for i in range(0, int(v0) * 100 + 1):
             x.append(i / 100.0)
             t1 = (t0 / t_item_1) * log(d_item_1 * sqrt(1 + (x[i] * f_move * f_item_1) ** 2))
             y1.append(t1 if t1 >= 0 else 0)
@@ -101,7 +101,7 @@ class MyFigure(FigureCanvasQTAgg):
         # 图2：坦克直线前进时火炮实时精度与当前速度的关系图
         self.axes2 = self.fig.add_subplot(222)
         x, y1, y2, y3, y4 = [], [], [], [], []
-        for i in range(0, int(v0) * 100):
+        for i in range(0, int(v0) * 100 + 1):
             x.append(i / 100.0)
             t1 = d0 * d_item_1 * (sqrt(1 + (x[i] * f_move * f_item_1) ** 2))
             y1.append(t1 if t1 >= d0 * d_item_1 else d0 * d_item_1)
@@ -175,7 +175,7 @@ class MyFigure(FigureCanvasQTAgg):
         # 图4：坦克开火后火炮实时精度与开火后经过时间的关系图
         self.axes4 = self.fig.add_subplot(224)
         x, y1, y2, y3, y4 = [], [], [], [], []
-        for i in range(0, int(t_r * 100)):
+        for i in range(0, int(t_r * 100) + 1):
             x.append(i / 100.0)
             if x[i] == 0:
                 t1 = d0 * d_item_1
@@ -352,11 +352,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.plot_fig()
         return
 
-    # 动作 help 触发
+    # 帮助信息
     def help(self):
-        QMessageBox.about(self, "帮助", "坦克世界缩圈扩圈计算工具 v1.0\nCopyright 黯流雾雨, 2023")
+        msg = "\t坦克世界缩圈扩圈计算工具 v2.0\n\n" + \
+              "1. 选择车辆的三扩系数和缩圈时间、精度、极速、转向速度等基础属性，属性可以用tanks.gg中公布的基础数值；\n" +\
+              "2. 在配置数据中选择目标精度、旋转角度以及是否旋转车体选项，同时选择需要对比的两套配件，注意配件等级选择；\n" +\
+              "3. 点击“计算数据”进行绘图和数据展示，如需要清除信息则点击“清除数据”；\n" +\
+              "4. 面板左侧展示了四种情形下两套配件的最终效果，具体数值可以通过下方数据信息展示栏中的结果对比。\n" +\
+              "\n\tCopyright 黯流雾雨, 2023"
+        QMessageBox.about(self, "帮助", msg)
         return
 
+    # 读取文件：导入配置数据
     def read_file(self):
         try:
             file_name = QFileDialog.getOpenFileName(self, '选择文件', '', 'Excel 逗号分隔值文件(*.csv)')
@@ -404,10 +411,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.comboBox_level_5.setCurrentIndex(int(attr_list[23][0]))
             self.comboBox_level_6.setCurrentIndex(int(attr_list[24][0]))
 
-            QMessageBox.about(self, "打开成功", "打开配置属性文件成功，文件名：" + str(file_name[0]))
+            QMessageBox.about(self, "打开成功", "打开配置属性文件成功，文件路径：" + str(file_name[0]))
         except FileNotFoundError:
-            QMessageBox.about(self, "打开失败", "打开文件失败，可能是文件不存在或类型错误")
+            QMessageBox.warning(self, "打开失败", "打开文件失败，可能是文件不存在或类型错误")
 
+    # 保存文件：导出配置数据
     def save_file(self):
         try:
             file_name = QFileDialog.getSaveFileName(self, '选择文件', 'wot.csv', 'Excel 逗号分隔值文件(*.csv)')
@@ -459,9 +467,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                 for row in range(len(attr_list)):
                     writer.writerow(attr_list[row])
 
-            QMessageBox.about(self, "保存成功", "保存配置属性文件成功，文件名：" + str(file_name[0]))
+            QMessageBox.about(self, "保存成功", "保存配置属性文件成功，文件路径：" + str(file_name[0]))
         except FileNotFoundError:
-            QMessageBox.about(self, "保存失败", "保存文件失败")
+            QMessageBox.warning(self, "保存失败", "保存文件失败")
 
     def value_change_move(self):
         move_f = self.horizontalSlider_move.value() / 100.0

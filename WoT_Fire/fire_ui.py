@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1620, 1080)
+        MainWindow.resize(1440, 1080)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -102,7 +102,7 @@ class Ui_MainWindow(object):
         self.textEdit.setTabStopWidth(40)
         self.textEdit.setObjectName("textEdit")
         self.verticalLayout_3.addWidget(self.textEdit)
-        self.verticalLayout_3.setStretch(0, 5)
+        self.verticalLayout_3.setStretch(0, 4)
         self.verticalLayout_3.setStretch(2, 1)
         self.horizontalLayout_13.addLayout(self.verticalLayout_3)
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
@@ -892,7 +892,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_13.setStretch(0, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1620, 23))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1440, 23))
         self.menubar.setObjectName("menubar")
         self.menu = QtWidgets.QMenu(self.menubar)
         self.menu.setObjectName("menu")

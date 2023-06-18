@@ -12,7 +12,7 @@ Some programs and codes about the game World of Tanks
 
 坦克世界缩圈扩圈计算器 \
 实现方式：python + matplotlib + pyqt5 \
-总代码量约1300行
+总代码量约1600行
 
 ### 使用说明
 

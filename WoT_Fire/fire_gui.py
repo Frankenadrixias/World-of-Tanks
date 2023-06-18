@@ -4,7 +4,7 @@
 @Time：2023/2/19 11:22
 @Auth：FriedrichXR
 @IDE ：PyCharm
-@desc：Demo1 of GUI by PyQt5
+@desc：WoT calculator on PyQt5 by 黯流雾雨
 """
 
 from PyQt5.QtWidgets import *
@@ -21,7 +21,7 @@ from math import sqrt, log
 matplotlib.use("Qt5Agg")  # 声明使用QT5
 mpl.rcParams['font.sans-serif'] = ['Microsoft Yahei']  # 中文显示
 mpl.rcParams['axes.unicode_minus'] = False  # 负号显示
-font = {'family': 'Microsoft Yahei'}
+font = {'family': 'Microsoft Yahei'}  # 设置字体
 matplotlib.rc('font', **font)
 
 # 配件属性，每个配件都会对以下属性中的某一个或某几个产生影响：
@@ -54,7 +54,7 @@ class MyFigure(FigureCanvasQTAgg):
         # Matplotlib根据输入参数画图
 
     def plot_figure(self, f_move, f_hull, f_gun, f_fire, t0, d0, d_obj, v0, w_hull, w_gun, t_r,
-                    check, angle, i1, i2, i3, l1, l2, l3, i4, i5, i6, l4, l5, l6, ):
+                    check, angle, i1, i2, i3, l1, l2, l3, i4, i5, i6, l4, l5, l6):
 
         # 重置和调整画布
         self.fig.clf()
@@ -367,9 +367,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                     attr_list.append(row)
 
             # 基础扩圈系数
-            self.horizontalSlider_move.setValue(int(attr_list[0][0]))
-            self.horizontalSlider_rotate.setValue(int(attr_list[1][0]))
-            self.horizontalSlider_gun.setValue(int(attr_list[2][0]))
+            self.horizontalSlider_move.setValue(int(float(attr_list[0][0]) * 100))
+            self.horizontalSlider_rotate.setValue(int(float(attr_list[1][0]) * 100))
+            self.horizontalSlider_gun.setValue(int(float(attr_list[2][0]) * 100))
             self.doubleSpinBox_fire.setValue(round(float(attr_list[3][0]), 2))
 
             # 瞄准时间和精度
@@ -413,9 +413,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             file_name = QFileDialog.getSaveFileName(self, '选择文件', 'wot.csv', 'Excel 逗号分隔值文件(*.csv)')
 
             # 基础扩圈系数
-            move_f = self.horizontalSlider_move.value()
-            rotate_f = self.horizontalSlider_rotate.value()
-            gun_f = self.horizontalSlider_gun.value()
+            move_f = self.horizontalSlider_move.value() / 100.0
+            rotate_f = self.horizontalSlider_rotate.value() / 100.0
+            gun_f = self.horizontalSlider_gun.value() / 100.0
             fire_f = self.doubleSpinBox_fire.value()
 
             # 瞄准时间和精度
@@ -460,8 +460,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                     writer.writerow(attr_list[row])
 
             QMessageBox.about(self, "保存成功", "保存配置属性文件成功，文件名：" + str(file_name[0]))
-        except FileExistsError:
-            QMessageBox.about(self, "保存失败", "保存文件失败，文件已存在")
+        except FileNotFoundError:
+            QMessageBox.about(self, "保存失败", "保存文件失败")
 
     def value_change_move(self):
         move_f = self.horizontalSlider_move.value() / 100.0

@@ -11,16 +11,16 @@ Some programs and codes about the game World of Tanks
 ### 介绍
 
 坦克世界缩圈扩圈计算器 \
-实现方式：python + matplotlib + pyqt5 \
+实现方式：Python + Matplotlib + PyQt5 \
 总代码量约1600行
 
 ### 使用说明
 
-1. 下载 WoT_Fire/dist 目录下的 “wot缩圈扩圈计算器.exe” 文件
+1. 下载 WoT_Fire/dist 目录下的 “WoT缩圈扩圈计算器 vXXX.exe” 文件
 2. 如果您的电脑对 exe 文件敏感，直接下载会触发杀毒软件保护机制，那么请下载 WoT_Fire 目录下的 “wot缩圈扩圈计算器.zip” 文件，将其解压
-3. 打开 “wot缩圈扩圈计算器.exe” 文件运行程序
+3. 打开 “WoT缩圈扩圈计算器 vXXX.exe” 文件运行程序
 
-### 更新内容
+### 更新日志
 
 #### 2023.06.18 v2.0
 
@@ -54,6 +54,13 @@ Some programs and codes about the game World of Tanks
 4. 该程序目前主要是为了对比配件的效果，暂时没考虑战地改装、成员技能的影响，如果需要在此基础上计算，
 建议在tanks.gg上配置好后输入等效数据；
 5. 目前程序是2.0版本，根据大家需求还可以进一步改进。
+
+### 程序相关
+
+1. QT编辑与运行：首先在 Tools -> External Tools -> QtDesigner 设计ui界面，
+之后右键 fire_ui.ui -> External Tools PyUIC 生成 fire_ui.py文件，
+然后在 fire_gui.py 中设置逻辑并运行。
+2. 打包程序：pyinstaller -i tank.ico -F -w fire_gui.py
 
 ## 坦克世界点亮距离计算器
 

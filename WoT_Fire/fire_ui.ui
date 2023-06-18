@@ -51,7 +51,7 @@ border-image:url(:/background-alpha.png)
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="1,0">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0">
+     <layout class="QVBoxLayout" name="verticalLayout_3" stretch="5,0,1">
       <property name="spacing">
        <number>10</number>
       </property>
@@ -141,7 +141,7 @@ border-image:url(:/transparent.png)
       <item>
        <widget class="QTextEdit" name="textEdit">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -182,12 +182,15 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'微软雅黑'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;此处展示装备配件后的坦克火控基础信息&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
+        <property name="tabStopWidth">
+         <number>40</number>
+        </property>
        </widget>
       </item>
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,10,0,0,0,1,1">
+     <layout class="QVBoxLayout" name="verticalLayout_4" stretch="15,3,6,1,1">
       <property name="spacing">
        <number>15</number>
       </property>
@@ -204,31 +207,31 @@ p, li { white-space: pre-wrap; }
        <number>10</number>
       </property>
       <item>
-       <widget class="QLabel" name="label_14">
-        <property name="font">
-         <font>
-          <family>微软雅黑</family>
-          <pointsize>12</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>基础属性</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0">
         <property name="spacing">
          <number>5</number>
         </property>
         <property name="bottomMargin">
          <number>10</number>
         </property>
+        <item>
+         <widget class="QLabel" name="label_14">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>基础属性</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+          </property>
+         </widget>
+        </item>
         <item>
          <widget class="QLabel" name="label_move">
           <property name="sizePolicy">
@@ -753,28 +756,7 @@ p, li { white-space: pre-wrap; }
        </layout>
       </item>
       <item>
-       <widget class="QLabel" name="label_15">
-        <property name="font">
-         <font>
-          <family>微软雅黑</family>
-          <pointsize>12</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
-        </property>
-        <property name="text">
-         <string>配置数据</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0,1">
         <property name="spacing">
          <number>5</number>
         </property>
@@ -782,12 +764,39 @@ p, li { white-space: pre-wrap; }
          <number>0</number>
         </property>
         <item>
+         <widget class="QLabel" name="label_15">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="text">
+           <string>配置数据</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <property name="spacing">
            <number>20</number>
           </property>
           <item>
            <widget class="QLabel" name="label_10">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="font">
              <font>
               <family>微软雅黑</family>
@@ -804,6 +813,12 @@ p, li { white-space: pre-wrap; }
           </item>
           <item>
            <widget class="QLabel" name="label_9">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="font">
              <font>
               <family>微软雅黑</family>
@@ -892,7 +907,7 @@ p, li { white-space: pre-wrap; }
          <string notr="true">QTabWidget:pane{border-top:0px solid #ffffff; background:transparent;}</string>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">

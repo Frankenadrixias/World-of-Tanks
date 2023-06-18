@@ -66,26 +66,29 @@ class MyFigure(FigureCanvasQTAgg):
         f_item_1 = item_level[i1][l1][2] * item_level[i2][l2][2] * item_level[i3][l3][2]
         w_item_1 = item_level[i1][l1][3] * item_level[i2][l2][3] * item_level[i3][l3][3]
 
+        t_item_2 = item_level[i4][l4][0] * item_level[i5][l5][0] * item_level[i6][l6][0]
+        d_item_2 = item_level[i4][l4][1] * item_level[i5][l5][1] * item_level[i6][l6][1]
+        f_item_2 = item_level[i4][l4][2] * item_level[i5][l5][2] * item_level[i6][l6][2]
+        w_item_2 = item_level[i4][l4][3] * item_level[i5][l5][3] * item_level[i6][l6][3]
+
         # 图1：坦克直线前进时火炮缩圈到指定精度所需时间与当前速度的关系图
         self.axes1 = self.fig.add_subplot(221)
         x, y1, y2, y3, y4 = [], [], [], [], []
         for i in range(0, int(v0) * 100):
             x.append(i / 100.0)
-            t1 = t0 * log(sqrt(1 + (x[i] * f_move) ** 2))
+            t1 = (t0 / t_item_1) * log(sqrt(1 + (x[i] * f_move * f_item_1) ** 2))
             y1.append(t1 if t1 >= 0 else 0)
-            t2 = t0 * log(d0 * (sqrt(1 + (x[i] * f_move) ** 2)) / d_obj)
+            t2 = (t0 / t_item_1) * log((d0 * d_item_1) * (sqrt(1 + (x[i] * f_move * f_item_1) ** 2)) / d_obj)
             y2.append(t2 if t2 >= 0 else 0)
-            t3 = (t0 / t_item_1) * log(sqrt(1 + (x[i] * f_move * f_item_1) ** 2))
+            t3 = (t0 / t_item_2) * log(sqrt(1 + (x[i] * f_move * f_item_2) ** 2))
             y3.append(t3 if t3 >= 0 else 0)
-            t4 = (t0 / t_item_1) * log((d0 * d_item_1) * (sqrt(1 + (x[i] * f_move * f_item_1) ** 2)) / d_obj)
+            t4 = (t0 / t_item_2) * log((d0 * d_item_2) * (sqrt(1 + (x[i] * f_move * f_item_2) ** 2)) / d_obj)
             y4.append(t4 if t4 >= 0 else 0)
 
         self.axes1.plot(x, y1, linestyle=':', label='缩圈到基础精度（配件组1）')
         self.axes1.plot(x, y2, linestyle=':', label='缩圈到目标精度（配件组1）')
-        self.axes1.plot(x, y3, label='缩圈到基础精度（当前配件）\n最大所需时间: ' +
-                                     str('{:.3f}'.format(y3[-1])) + 's')
-        self.axes1.plot(x, y4, label='缩圈到目标精度（当前配件）\n最大所需时间: ' +
-                                     str('{:.3f}'.format(y4[-1])) + 's')
+        self.axes1.plot(x, y3, label='缩圈到基础精度（配件组2）')
+        self.axes1.plot(x, y4, label='缩圈到目标精度（配件组2）')
         self.axes1.set_title("坦克直线前进时火炮缩圈到指定精度所需时间与当前速度的关系")
         self.axes1.set_ylabel("缩圈所需时间(s)", fontsize=10, labelpad=3)
         self.axes1.set_xlabel("当前移动速度(km/h)", fontsize=10, labelpad=2)
@@ -99,16 +102,15 @@ class MyFigure(FigureCanvasQTAgg):
         x, y1, y2, y3, y4 = [], [], [], [], []
         for i in range(0, int(v0) * 100):
             x.append(i / 100.0)
-            t1 = d0 * (sqrt(1 + (x[i] * f_move) ** 2))
-            y1.append(t1 if t1 >= d0 else d0)
-            t2 = d0 * d_item_1 * (sqrt(1 + (x[i] * f_move * f_item_1) ** 2))
-            y2.append(t2 if t2 >= d0 * d_item_1 else d0 * d_item_1)
+            t1 = d0 * d_item_1 * (sqrt(1 + (x[i] * f_move * f_item_1) ** 2))
+            y1.append(t1 if t1 >= d0 * d_item_1 else d0 * d_item_1)
+            t2 = d0 * d_item_2 * (sqrt(1 + (x[i] * f_move * f_item_2) ** 2))
+            y2.append(t2 if t2 >= d0 * d_item_2 else d0 * d_item_2)
             y3.append(d_obj)
-            y4.append(d0 * d_item_1)
+            y4.append(d0)
 
-        self.axes2.plot(x, y1, linestyle=':', label='实时精度（无配件）')
-        self.axes2.plot(x, y2, label='实时精度（当前配件）\n最大精度: ' +
-                                     str('{:.3f}'.format(y2[-1])) + 'm')
+        self.axes2.plot(x, y1, linestyle=':', label='实时精度（配件组1）')
+        self.axes2.plot(x, y2, label='实时精度（配件组2）')
         self.axes2.plot(x, y3, linewidth=1, linestyle='--',
                         label='目标精度: ' + str('{:.3f}'.format(y3[-1])) + 'm')
         self.axes2.plot(x, y4, linewidth=1, linestyle='--',
@@ -129,33 +131,37 @@ class MyFigure(FigureCanvasQTAgg):
 
             # 如果勾选 “同时旋转车体” 选项：
             if check is True:
-                t1 = t0 * log(sqrt(1 + (w_gun * f_gun) ** 2 + (w_hull * f_hull) ** 2))
-                t2 = t0 * log(d0 * (sqrt(1 + (w_gun * f_gun) ** 2 + (w_hull * f_hull) ** 2)) / d_obj)
-                t3 = (t0 / t_item_1) * log(sqrt(1 + ((w_gun * w_item_1 * f_gun) ** 2 +
+                t1 = (t0 / t_item_1) * log(sqrt(1 + ((w_gun * w_item_1 * f_gun) ** 2 +
                                                      (w_hull * w_item_1 * f_hull) ** 2) * f_item_1 ** 2))
-                t4 = (t0 / t_item_1) * log((d0 * d_item_1) *
+                t2 = (t0 / t_item_1) * log((d0 * d_item_1) *
                                            (sqrt(1 + ((w_gun * w_item_1 * f_gun) ** 2 +
                                                       (w_hull * w_item_1 * f_hull) ** 2) * f_item_1 ** 2)) / d_obj)
-                y1.append(i / (w_gun + w_hull) + t1)
-                y2.append(i / (w_gun + w_hull) + t2)
-                y3.append(i / ((w_gun + w_hull) * w_item_1) + t3)
-                y4.append(i / ((w_gun + w_hull) * w_item_1) + t4)
+                t3 = (t0 / t_item_2) * log(sqrt(1 + ((w_gun * w_item_2 * f_gun) ** 2 +
+                                                     (w_hull * w_item_2 * f_hull) ** 2) * f_item_2 ** 2))
+                t4 = (t0 / t_item_2) * log((d0 * d_item_2) *
+                                           (sqrt(1 + ((w_gun * w_item_2 * f_gun) ** 2 +
+                                                      (w_hull * w_item_2 * f_hull) ** 2) * f_item_2 ** 2)) / d_obj)
+                y1.append(i / ((w_gun + w_hull) * w_item_1) + t1)
+                y2.append(i / ((w_gun + w_hull) * w_item_1) + t2)
+                y3.append(i / ((w_gun + w_hull) * w_item_2) + t3)
+                y4.append(i / ((w_gun + w_hull) * w_item_2) + t4)
             else:
-                t1 = t0 * log(sqrt(1 + (w_gun * f_gun) ** 2))
-                t2 = t0 * log(d0 * (sqrt(1 + (w_gun * f_gun) ** 2)) / d_obj)
-                t3 = (t0 / t_item_1) * log(sqrt(1 + (w_gun * w_item_1 * f_gun * f_item_1) ** 2))
-                t4 = (t0 / t_item_1) * log((d0 * d_item_1) *
+                t1 = (t0 / t_item_1) * log(sqrt(1 + (w_gun * w_item_1 * f_gun * f_item_1) ** 2))
+                t2 = (t0 / t_item_1) * log((d0 * d_item_1) *
                                            (sqrt(1 + (w_gun * w_item_1 * f_gun * f_item_1) ** 2)) / d_obj)
-                y1.append(i / w_gun + t1)
-                y2.append(i / w_gun + t2)
-                y3.append(i / (w_gun * w_item_1) + t3)
-                y4.append(i / (w_gun * w_item_1) + t4)
+                t3 = (t0 / t_item_2) * log(sqrt(1 + (w_gun * w_item_2 * f_gun * f_item_2) ** 2))
+                t4 = (t0 / t_item_2) * log((d0 * d_item_2) *
+                                           (sqrt(1 + (w_gun * w_item_2 * f_gun * f_item_2) ** 2)) / d_obj)
+                y1.append(i / (w_gun * w_item_1) + t1)
+                y2.append(i / (w_gun * w_item_1) + t2)
+                y3.append(i / (w_gun * w_item_2) + t3)
+                y4.append(i / (w_gun * w_item_2) + t4)
 
-        self.axes3.plot(x, y1, linestyle=':', label='缩圈到基础精度（无配件）')
-        self.axes3.plot(x, y2, linestyle=':', label='缩圈到目标精度（无配件）')
-        self.axes3.plot(x, y3, label='缩圈到基础精度（当前配件）\n旋转90°总时间: ' +
+        self.axes3.plot(x, y1, linestyle=':', label='缩圈到基础精度（配件组1）')
+        self.axes3.plot(x, y2, linestyle=':', label='缩圈到目标精度（配件组1）')
+        self.axes3.plot(x, y3, label='缩圈到基础精度（配件组2）\n旋转90°总时间: ' +
                                      str('{:.3f}'.format(y3[90])) + 's')
-        self.axes3.plot(x, y4, label='缩圈到目标精度（当前配件）\n旋转90°总时间: ' +
+        self.axes3.plot(x, y4, label='缩圈到目标精度（配件组2）\n旋转90°总时间: ' +
                                      str('{:.3f}'.format(y4[90])) + 's')
         self.axes3.set_title("坦克旋转时火炮缩圈到指定精度所需时间与旋转角度的关系")
         self.axes3.set_ylabel("缩圈所需时间(s)", fontsize=10, labelpad=3)
@@ -260,6 +266,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         txt_1 = self.comboBox_item_1.currentText() + '(' + self.comboBox_level_1.currentText() + ')'
         txt_2 = self.comboBox_item_2.currentText() + '(' + self.comboBox_level_2.currentText() + ')'
         txt_3 = self.comboBox_item_3.currentText() + '(' + self.comboBox_level_3.currentText() + ')'
+        txt_4 = self.comboBox_item_4.currentText() + '(' + self.comboBox_level_4.currentText() + ')'
+        txt_5 = self.comboBox_item_5.currentText() + '(' + self.comboBox_level_5.currentText() + ')'
+        txt_6 = self.comboBox_item_6.currentText() + '(' + self.comboBox_level_6.currentText() + ')'
 
         # 配件影响属性
         t_item = item_level[item_1][level_1][0] * item_level[item_2][level_2][0] * item_level[item_3][level_3][0]
@@ -299,14 +308,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                                        (sqrt(1 + (fire_f * f_item) ** 2)) / dispersion_obj)
 
         # 显示信息
-        self.textEdit.setText('当前状态三扩系数：' +
-                              '移动 ' + move_f_str + ' / 旋转 ' + rotate_f_str + ' / 转炮 ' + gun_f_str +
-                              '，基础缩圈时间' + aim_time_str + 's，基础精度' + dispersion_str + 'm\n' +
-                              '当前配件：' + txt_1 + '、' + txt_2 + '、' + txt_3 + '\n' +
-                              '配件属性影响：瞄准时间 ' + str('{:.4f}'.format(t_item)) +
-                              '，基础精度 ' + str('{:.4f}'.format(d_item)) +
-                              '，三扩系数 ' + str('{:.4f}'.format(f_item)) +
-                              '，转向速度 ' + str('{:.4f}'.format(w_item)) + '\n'
+        self.textEdit.setText('【当前配件信息】\n' +
+                              '\t配件组1：' + txt_1 + '、' + txt_2 + '、' + txt_3 + '\n' +
+                              '\t配件组2：' + txt_4 + '、' + txt_5 + '、' + txt_6 + '\n' +
                               '【坦克极速前进】缩圈到基础精度所需时间：' + str('{:.3f}'.format(t1)) + 's，' +
                               '缩圈到目标精度所需时间：' + str('{:.3f}'.format(t2)) + 's，' +
                               '最大精度：' + str('{:.3f}'.format(t3)) + 'm\n' +

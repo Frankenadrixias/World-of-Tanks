@@ -52,8 +52,8 @@ class MyFigure(FigureCanvasQTAgg):
 
         # Matplotlib根据输入参数画图
 
-    def plot_figure(self, f_move, f_hull, f_gun, f_fire, t0, d0, d_obj,
-                    v0, w_hull, w_gun, t_r, check, i1, i2, i3, l1, l2, l3, i4, i5, i6, l4, l5, l6,):
+    def plot_figure(self, f_move, f_hull, f_gun, f_fire, t0, d0, d_obj, v0, w_hull, w_gun, t_r,
+                    check, angle, i1, i2, i3, l1, l2, l3, i4, i5, i6, l4, l5, l6, ):
 
         # 重置和调整画布
         self.fig.clf()
@@ -109,7 +109,7 @@ class MyFigure(FigureCanvasQTAgg):
             y3.append(d_obj)
             y4.append(d0)
 
-        self.axes2.plot(x, y1, linestyle=':', label='实时精度（配件组1）')
+        self.axes2.plot(x, y1, label='实时精度（配件组1）')
         self.axes2.plot(x, y2, label='实时精度（配件组2）')
         self.axes2.plot(x, y3, linewidth=1, linestyle='--',
                         label='目标精度: ' + str('{:.3f}'.format(y3[-1])) + 'm')
@@ -126,7 +126,7 @@ class MyFigure(FigureCanvasQTAgg):
         # 图3：坦克旋转时火炮缩圈到指定精度所需时间与旋转角度的关系图
         self.axes3 = self.fig.add_subplot(223)
         x, y1, y2, y3, y4 = [], [], [], [], []
-        for i in range(0, 180):
+        for i in range(0, angle):
             x.append(i)
 
             # 如果勾选 “同时旋转车体” 选项：
@@ -159,10 +159,8 @@ class MyFigure(FigureCanvasQTAgg):
 
         self.axes3.plot(x, y1, linestyle=':', label='缩圈到基础精度（配件组1）')
         self.axes3.plot(x, y2, linestyle=':', label='缩圈到目标精度（配件组1）')
-        self.axes3.plot(x, y3, label='缩圈到基础精度（配件组2）\n旋转90°总时间: ' +
-                                     str('{:.3f}'.format(y3[90])) + 's')
-        self.axes3.plot(x, y4, label='缩圈到目标精度（配件组2）\n旋转90°总时间: ' +
-                                     str('{:.3f}'.format(y4[90])) + 's')
+        self.axes3.plot(x, y3, label='缩圈到基础精度（配件组2）')
+        self.axes3.plot(x, y4, label='缩圈到目标精度（配件组2）')
         self.axes3.set_title("坦克旋转时火炮缩圈到指定精度所需时间与旋转角度的关系")
         self.axes3.set_ylabel("缩圈所需时间(s)", fontsize=10, labelpad=3)
         self.axes3.set_xlabel("旋转角度(°)", fontsize=10, labelpad=2)
@@ -177,27 +175,22 @@ class MyFigure(FigureCanvasQTAgg):
         for i in range(0, int(t_r * 100)):
             x.append(i / 100.0)
             if x[i] == 0:
-                t1 = d0
-                t2 = d0 * d_item_1
+                t1 = d0 * d_item_1
+                t2 = d0 * d_item_2
             else:
-                t1 = d0 * (sqrt(1 + f_fire ** 2)) / np.e ** (x[i] / t0)
-                t2 = d0 * d_item_1 * (sqrt(1 + (f_fire * f_item_1) ** 2)) / np.e ** (x[i] * t_item_1 / t0)
-            y1.append(t1 if t1 >= d0 else d0)
-            y2.append(t2 if t2 >= d0 * d_item_1 else d0 * d_item_1)
+                t1 = d0 * d_item_1 * (sqrt(1 + (f_fire * f_item_1) ** 2)) / np.e ** (x[i] * t_item_1 / t0)
+                t2 = d0 * d_item_2 * (sqrt(1 + (f_fire * f_item_2) ** 2)) / np.e ** (x[i] * t_item_2 / t0)
+            y1.append(t1 if t1 >= d0 * d_item_1 else d0 * d_item_1)
+            y2.append(t2 if t2 >= d0 * d_item_2 else d0 * d_item_2)
             y3.append(d_obj)
-            y4.append(d0 * d_item_1)
+            y4.append(d0)
 
-        t2 = (t0 / t_item_1) * log((d0 * d_item_1) * (sqrt(1 + (f_fire * f_item_1) ** 2)) / d_obj)
-        t3 = (t0 / t_item_1) * log(sqrt(1 + (f_fire * f_item_1) ** 2))
-
-        self.axes4.plot(x, y1, linestyle=':', label='实时精度（无配件）')
-        self.axes4.plot(x, y2, label='实时精度（当前配件）')
+        self.axes4.plot(x, y1, label='实时精度（配件组1）')
+        self.axes4.plot(x, y2, label='实时精度（配件组2）')
         self.axes4.plot(x, y3, linewidth=1, linestyle='--',
-                        label='目标精度: ' + str('{:.3f}'.format(y3[-1])) + 'm\n' +
-                              '缩圈所需时间: ' + str('{:.3f}'.format(t2)) + 's')
+                        label='目标精度: ' + str('{:.3f}'.format(y3[-1])) + 'm')
         self.axes4.plot(x, y4, linewidth=1, linestyle='--',
-                        label='基础精度: ' + str('{:.3f}'.format(y4[-1])) + 'm\n' +
-                              '缩圈所需时间: ' + str('{:.3f}'.format(t3)) + 's')
+                        label='基础精度: ' + str('{:.3f}'.format(y4[-1])) + 'm')
         self.axes4.set_title("坦克开火后火炮实时精度与开火后经过时间的关系")
         self.axes4.set_ylabel("当前实时精度(m)", fontsize=10, labelpad=3)
         self.axes4.set_xlabel("开火后经过时间(s)", fontsize=10, labelpad=2)
@@ -242,8 +235,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         hull_speed = self.doubleSpinBox_hullSpeed.value()
         turret_speed = self.doubleSpinBox_turretSpeed.value()
 
-        # 是否勾选同时旋转车体
+        # 是否勾选同时旋转车体和旋转角度
         check = self.radioButton.isChecked()
+        angle = self.spinBox.value()
 
         # 配件选择下拉菜单
         # 第一套配件的选择结果
@@ -271,53 +265,93 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         txt_6 = self.comboBox_item_6.currentText() + '(' + self.comboBox_level_6.currentText() + ')'
 
         # 配件影响属性
-        t_item = item_level[item_1][level_1][0] * item_level[item_2][level_2][0] * item_level[item_3][level_3][0]
-        d_item = item_level[item_1][level_1][1] * item_level[item_2][level_2][1] * item_level[item_3][level_3][1]
-        f_item = item_level[item_1][level_1][2] * item_level[item_2][level_2][2] * item_level[item_3][level_3][2]
-        w_item = item_level[item_1][level_1][3] * item_level[item_2][level_2][3] * item_level[item_3][level_3][3]
+        t_item_1 = item_level[item_1][level_1][0] * item_level[item_2][level_2][0] * item_level[item_3][level_3][0]
+        d_item_1 = item_level[item_1][level_1][1] * item_level[item_2][level_2][1] * item_level[item_3][level_3][1]
+        f_item_1 = item_level[item_1][level_1][2] * item_level[item_2][level_2][2] * item_level[item_3][level_3][2]
+        w_item_1 = item_level[item_1][level_1][3] * item_level[item_2][level_2][3] * item_level[item_3][level_3][3]
 
-        move_f_str = str('{:.3f}'.format(move_f * f_item))
-        rotate_f_str = str('{:.3f}'.format(rotate_f * f_item))
-        gun_f_str = str('{:.3f}'.format(gun_f * f_item))
-        aim_time_str = str('{:.3f}'.format(aim_time / t_item))
-        dispersion_str = str('{:.3f}'.format(dispersion * d_item))
+        t_item_2 = item_level[item_4][level_4][0] * item_level[item_5][level_5][0] * item_level[item_6][level_6][0]
+        d_item_2 = item_level[item_4][level_4][1] * item_level[item_5][level_5][1] * item_level[item_6][level_6][1]
+        f_item_2 = item_level[item_4][level_4][2] * item_level[item_5][level_5][2] * item_level[item_6][level_6][2]
+        w_item_2 = item_level[item_4][level_4][3] * item_level[item_5][level_5][3] * item_level[item_6][level_6][3]
+
+        move_f_str = str('{:.3f}'.format(move_f * f_item_1))
+        rotate_f_str = str('{:.3f}'.format(rotate_f * f_item_1))
+        gun_f_str = str('{:.3f}'.format(gun_f * f_item_1))
+        aim_time_str = str('{:.3f}'.format(aim_time / t_item_1))
+        dispersion_str = str('{:.3f}'.format(dispersion * d_item_1))
 
         # 计算各个状态下的数值
-        t1 = (aim_time / t_item) * log(sqrt(1 + (top_speed * move_f * f_item) ** 2))
-        t2 = (aim_time / t_item) * log((dispersion * d_item) *
-                                       (sqrt(1 + (top_speed * move_f * f_item) ** 2)) / dispersion_obj)
-        t3 = (dispersion * d_item) * (sqrt(1 + (top_speed * move_f * f_item) ** 2))
+        # 坦克直线前进时火炮缩圈到指定精度所需时间与最大精度
+        t1 = (aim_time / t_item_1) * log(sqrt(1 + (top_speed * move_f * f_item_1) ** 2))
+        t2 = (aim_time / t_item_1) * log((dispersion * d_item_1) *
+                                         (sqrt(1 + (top_speed * move_f * f_item_1) ** 2)) / dispersion_obj)
+        t3 = (dispersion * d_item_1) * (sqrt(1 + (top_speed * move_f * f_item_1) ** 2))
 
+        t4 = (aim_time / t_item_2) * log(sqrt(1 + (top_speed * move_f * f_item_2) ** 2))
+        t5 = (aim_time / t_item_2) * log((dispersion * d_item_2) *
+                                         (sqrt(1 + (top_speed * move_f * f_item_2) ** 2)) / dispersion_obj)
+        t6 = (dispersion * d_item_2) * (sqrt(1 + (top_speed * move_f * f_item_2) ** 2))
+
+        # 坦克旋转时火炮缩圈到指定精度所需时间与旋转角度
         if check is True:
-            t4 = 90 / ((turret_speed + hull_speed) * w_item) + (aim_time / t_item) *\
-                 log(sqrt(1 + ((turret_speed * w_item * gun_f) ** 2 +
-                               (hull_speed * w_item * rotate_f) ** 2) * f_item ** 2))
-            t5 = 90 / ((turret_speed + hull_speed) * w_item) + (aim_time / t_item) *\
-                 log((dispersion * d_item) *
-                     (sqrt(1 + ((turret_speed * w_item * gun_f) ** 2 +
-                                (hull_speed * w_item * rotate_f) ** 2) * f_item ** 2)) / dispersion_obj)
-        else:
-            t4 = 90 / (turret_speed * w_item) + (aim_time / t_item) *\
-                 log(sqrt(1 + (turret_speed * w_item * gun_f * f_item) ** 2))
-            t5 = 90 / (turret_speed * w_item) + (aim_time / t_item) *\
-                 log((dispersion * d_item) *
-                     (sqrt(1 + (turret_speed * w_item * gun_f * f_item) ** 2)) / dispersion_obj)
+            t7 = angle / ((turret_speed + hull_speed) * w_item_1) + (aim_time / t_item_1) * \
+                 log(sqrt(1 + ((turret_speed * w_item_1 * gun_f) ** 2 +
+                               (hull_speed * w_item_1 * rotate_f) ** 2) * f_item_1 ** 2))
+            t8 = angle / ((turret_speed + hull_speed) * w_item_1) + (aim_time / t_item_1) * \
+                 log((dispersion * d_item_1) *
+                     (sqrt(1 + ((turret_speed * w_item_1 * gun_f) ** 2 +
+                                (hull_speed * w_item_1 * rotate_f) ** 2) * f_item_1 ** 2)) / dispersion_obj)
 
-        t6 = (aim_time / t_item) * log(sqrt(1 + (fire_f * f_item) ** 2))
-        t7 = (aim_time / t_item) * log((dispersion * d_item) *
-                                       (sqrt(1 + (fire_f * f_item) ** 2)) / dispersion_obj)
+            t9 = angle / ((turret_speed + hull_speed) * w_item_2) + (aim_time / t_item_2) * \
+                 log(sqrt(1 + ((turret_speed * w_item_2 * gun_f) ** 2 +
+                               (hull_speed * w_item_2 * rotate_f) ** 2) * f_item_2 ** 2))
+            t10 = angle / ((turret_speed + hull_speed) * w_item_2) + (aim_time / t_item_2) * \
+                  log((dispersion * d_item_2) *
+                      (sqrt(1 + ((turret_speed * w_item_2 * gun_f) ** 2 +
+                                 (hull_speed * w_item_2 * rotate_f) ** 2) * f_item_2 ** 2)) / dispersion_obj)
+        else:
+            t7 = angle / (turret_speed * w_item_1) + (aim_time / t_item_1) * \
+                 log(sqrt(1 + (turret_speed * w_item_1 * gun_f * f_item_1) ** 2))
+            t8 = angle / (turret_speed * w_item_1) + (aim_time / t_item_1) * \
+                 log((dispersion * d_item_1) *
+                     (sqrt(1 + (turret_speed * w_item_1 * gun_f * f_item_1) ** 2)) / dispersion_obj)
+
+            t9 = angle / (turret_speed * w_item_2) + (aim_time / t_item_2) * \
+                 log(sqrt(1 + (turret_speed * w_item_2 * gun_f * f_item_2) ** 2))
+            t10 = angle / (turret_speed * w_item_2) + (aim_time / t_item_2) * \
+                  log((dispersion * d_item_2) *
+                      (sqrt(1 + (turret_speed * w_item_2 * gun_f * f_item_2) ** 2)) / dispersion_obj)
+
+        # 坦克开火后火炮完整缩圈时间
+        t11 = (aim_time / t_item_1) * log(d_item_1 * sqrt(1 + (fire_f * f_item_1) ** 2))
+        t12 = (aim_time / t_item_1) * log((dispersion * d_item_1) *
+                                          (sqrt(1 + (fire_f * f_item_1) ** 2)) / dispersion_obj)
+        t13 = (aim_time / t_item_2) * log(d_item_2 * sqrt(1 + (fire_f * f_item_2) ** 2))
+        t14 = (aim_time / t_item_2) * log((dispersion * d_item_2) *
+                                          (sqrt(1 + (fire_f * f_item_2) ** 2)) / dispersion_obj)
 
         # 显示信息
         self.textEdit.setText('【当前配件信息】\n' +
                               '\t配件组1：' + txt_1 + '、' + txt_2 + '、' + txt_3 + '\n' +
                               '\t配件组2：' + txt_4 + '、' + txt_5 + '、' + txt_6 + '\n' +
-                              '【坦克极速前进】缩圈到基础精度所需时间：' + str('{:.3f}'.format(t1)) + 's，' +
+                              '【坦克极速前进】\n' +
+                              '\t配件组1：缩圈到基础精度所需时间：' + str('{:.3f}'.format(t1)) + 's，' +
                               '缩圈到目标精度所需时间：' + str('{:.3f}'.format(t2)) + 's，' +
                               '最大精度：' + str('{:.3f}'.format(t3)) + 'm\n' +
-                              '【坦克全速旋转90°】缩圈到基础精度所需总时间：' + str('{:.3f}'.format(t4)) + 's，' +
-                              '缩圈到目标精度所需总时间：' + str('{:.3f}'.format(t5)) + 's\n' +
-                              '【坦克开火后】缩圈到基础精度所需总时间：' + str('{:.3f}'.format(t6)) + 's，' +
-                              '缩圈到目标精度所需总时间：' + str('{:.3f}'.format(t7)) + 's')
+                              '\t配件组2：缩圈到基础精度所需时间：' + str('{:.3f}'.format(t4)) + 's，' +
+                              '缩圈到目标精度所需时间：' + str('{:.3f}'.format(t5)) + 's，' +
+                              '最大精度：' + str('{:.3f}'.format(t6)) + 'm\n' +
+                              '【坦克全速旋转】旋转角度：' + str(angle) + '°\n' +
+                              '\t配件组1：缩圈到基础精度所需总时间：' + str('{:.3f}'.format(t7)) + 's，' +
+                              '缩圈到目标精度所需总时间：' + str('{:.3f}'.format(t8)) + 's\n' +
+                              '\t配件组2：缩圈到基础精度所需总时间：' + str('{:.3f}'.format(t9)) + 's，' +
+                              '缩圈到目标精度所需总时间：' + str('{:.3f}'.format(t10)) + 's\n' +
+                              '【坦克开火后】\n' +
+                              '\t配件组1：缩圈到基础精度所需时间：' + str('{:.3f}'.format(t11)) + 's，' +
+                              '缩圈到目标精度所需时间：' + str('{:.3f}'.format(t12)) + 's\n' +
+                              '\t配件组2：缩圈到基础精度所需时间：' + str('{:.3f}'.format(t13)) + 's，' +
+                              '缩圈到目标精度所需时间：' + str('{:.3f}'.format(t14)) + 's')
         self.plot_fig()
         return
 
@@ -359,8 +393,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         turret_speed = self.doubleSpinBox_turretSpeed.value()
         t_reload = self.doubleSpinBox_reloadTime.value()
 
-        # 是否勾选同时旋转车体
+        # 是否勾选同时旋转车体和旋转角度
         check = self.radioButton.isChecked()
+        angle = self.spinBox.value()
 
         # 配件选择下拉菜单
         # 第一套配件的选择结果
@@ -381,7 +416,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
         # 传参给 Matplotlib 画图
         self.canvas.plot_figure(move_f, rotate_f, gun_f, fire_f, aim_time, dispersion, dispersion_obj,
-                                top_speed, hull_speed, turret_speed, t_reload, check,
+                                top_speed, hull_speed, turret_speed, t_reload, check, angle,
                                 item_1, item_2, item_3, level_1, level_2, level_3,
                                 item_4, item_5, item_6, level_4, level_5, level_6)
         return
